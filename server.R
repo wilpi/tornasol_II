@@ -1,16 +1,18 @@
 require(car)# para recode
-library(reshape)#no usado, but i�ll be apply for data for barplot here
+library(reshape)#no usado, but i´ll be apply for data for barplot here
 library(ggplot2)
 library(dplyr)
 library(scales)
 library(dplyr)
 load("tornasol.RData")
 
-et<-matrix(c("Hipertenso", "No Hipertenso","Dislipidemico", 
-             "No Dislipidemico","Diabetico", "No Diabetico",
-             "Fumador", "No Fumador","Obeso", "No obeso"),2,5)
 
 shinyServer(function(input, output) {
+
+et<-matrix(c("Hipertenso", "No Hipertenso","Dislipidemico", 
+                 "No Dislipidemico","Diabetico", "No Diabetico",
+                 "Fumador", "No Fumador","Obeso", "No obeso"),2,5)
+    
     
     blank_theme <- theme_minimal()+
         theme(
@@ -22,26 +24,31 @@ shinyServer(function(input, output) {
             plot.title=element_text(size=14, face="bold")
         )
     
-    pv2<-function(input1=1,input2=1,input3=0){
+    pv2<-function(input1=1,input2="Hipertension",input3="Nacional"){
         #"Tornasol I"
         #"set1 suppor the subsetof midata     
         set1 <-input1
-        etiqet <-recode(input2, "1='Hipertension'; 2='Dislipidemia';
-                        3='Diabetes';4='Tabaquismo';5='Obesidad'")
-        set2 <-recode(input2, "1='htaxxx_x_100'; 2='cholestt_dico_x_100';
-                      3='diabet_dico_x_100';4='fums_dico_x_100';5='imc_dico_x_100'")
-        set3<-recode(input3, "1='Costa'; 2='Sierra';3='Selva'")
+        #Va entrar puro
+        etiqet <-c(input2)        
+        #Va INPUT2 ingresar como texto y se convertido a numero.
+        input22 <-recode(input2, "'Hipertension'=1; 'Dislipidemia'=2;
+                        'Diabetes'=3 ;'Tabaquismo'=4;'Obesidad'=5")
+       
+        input33<-recode(input3,"'Nacional'=0;'Costa'=1;'Sierra'=2;'Selva'=3")
         
-        if(input3==0){
+        set2 <-recode(input22, "1='htaxxx_x_100'; 2='cholestt_dico_x_100';
+                      3='diabet_dico_x_100';4='fums_dico_x_100';5='imc_dico_x_100'")
+                
+        if(input33==0){
             midata<-subset(au, estudio==set1)
         }
         else {
-            midata<-subset(au, estudio==set1& region==set3)   
+            midata<-subset(au, estudio==set1 & region==input3)   
         }
         p<-mean(midata[,set2],na.rm=TRUE)
         dg1<-c(p,100-p)
         df <- data.frame(
-            group = et[,input2],
+            group = et[,input22],
             value = round(dg1,1))
         bp<- ggplot(df, aes(x="", y=value, fill=group))+
             geom_bar(width = 1, stat = "identity")
@@ -55,28 +62,16 @@ shinyServer(function(input, output) {
         return(ploty)
     }
     
-#AQUI TENGO EL PROPBLEMA PARA  ENVIAR DOS ARGUMENTOS A LA FUNCTION PV2
-# HERE THE PROBLEM
-#HELP ME HELP ME 
-#HELP ME HELP ME 
-#HELP ME HELP ME 
-#HELP ME HELP ME 
-#HELP ME HELP ME 
-#HELP ME HELP ME 
-     dataInput <- reactive({
-            pv2(input$dataset
-                  #input$pato),  
-                  #input$region)                   
-                )    
+   
+    dataInput <- reactive({
+        pv2(c(input$dataset),c(input$pato),c(input$region)  
+            #input$region)                   
+        )    
     })
-#HELP ME HELP ME 
+    #HELP ME HELP ME me falta hacer pestañas para multiple outpu
     output$plot <- renderPlot({    
-                (dataInput())
+        (dataInput())
         
- 
-    #output$plot <- renderPlot({    
-     #   chartSeries(dataInput(), theme = chartTheme("white"), 
-      #              type = "line", log.scale = input$log, TA = NULL)
- 
+      
     })
 })

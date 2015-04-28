@@ -20,8 +20,8 @@ shinyUI(fluidPage(
                         choices = c("Tornasol I","Tornasol II")),
             selectInput("pato", label = "Choose a Disease:", 
                         choices = c("Hipertension","Dislipidemia","Diabetes","Tabaquismo","Obesidad")),
-            selectInput("dataset",label =  "Choose a Region:", 
-                        choices = c(0,"Costa","Sierra","Selva")),
+            selectInput("region",label =  "Choose a Region:", 
+                        choices = c("Nacional","Costa","Sierra","Selva")),
                     
             br(),
             br()
