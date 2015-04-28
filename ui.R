@@ -28,10 +28,15 @@ shinyUI(fluidPage(
         ),
         
         mainPanel(
-            h2("Prevalence of Cardiovascular Risk Factor"),
-            h5("Draft of work - i have a problem to pass ALL argument(diseases,region) to my function plot pv2, pv2 work fine out of shiny  "),
-            plotOutput("plot"),
-            h5("Coming soon, here barplot of prevalence by age group"))
+            tabsetPanel(type = "tabs", 
+                        tabPanel("General", plotOutput("plot")),
+                        tabPanel("Por Sexo", "En construccion" ),
+                        tabPanel("Grupo de Edad", plotOutput("plut") )
+                                   
+            # h2("Prevalence of Cardiovascular Risk Factor"),
+            #h5("Draft of work - i have a problem to pass ALL argument(diseases,region) to my function plot pv2, pv2 work fine out of shiny  "),
+            #plotOutput("plot"),
+            #h5("Coming soon, here barplot of prevalence by age group"))
             
     )
-))
+))))
