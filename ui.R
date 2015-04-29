@@ -10,12 +10,12 @@ et<-matrix(c("Hipertenso", "No Hipertenso","Dislipidemico",
              "Fumador", "No Fumador","Obeso", "No obeso"),2,5)
 
 shinyUI(fluidPage(
-    titlePanel("Mg. Wilmer Fuentes"),
+    titlePanel("TORNASOL: National Peruvian Data -  
+                     Cross Sectional Study of Cardiovascular  Diseases "),
     
     sidebarLayout(
         sidebarPanel(
-            helpText("TORNASOL II, National Peruvian Data -  
-                     Cross Sectional Study of Cardiovascular  Diseases"),
+            helpText("Data Scientist: Mg. Wilmer Fuentes"),
             selectInput("dataset", label = "Choose a Study:", 
                         choices = c("Tornasol I","Tornasol II")),
             selectInput("pato", label = "Choose a Disease:", 
@@ -24,6 +24,9 @@ shinyUI(fluidPage(
                         choices = c("Nacional","Costa","Sierra","Selva")),
                     
             br(),
+            helpText("Sponsored:", a("www.datascienceperu.com", href="http://www.datascienceperu.com")),
+            helpText("Contact: Phone: +51997498295 "),
+            helpText( a("analista@datascienceperu.com", href="mailto:analista@datascienceperu.com")),
             br()
         ),
         
@@ -37,19 +40,23 @@ shinyUI(fluidPage(
                         tabPanel("Socioeconomic", plotOutput("ysamar")),
                         tabPanel("Sex vs Age", plotOutput("francis")),
                         tabPanel("Credits",                  
-                                h4('The app is intended to show a prediction for a childs height based on the heights of the parents.'),
-                                 p('The user needs to add in the height of the father and height of the mother and check the box for
-                                if they want to know the predicted height of a son, a daughter or both. The app will run a simple
-                                calculation (note. this is not based of any real data of childrens heights but just a simple sum
-                                to shows the functions are working) and show the average expected height of a child. If the check
-                                boxes are ticked a calculation for a son and/or a daughter will also appear'),
-                                 p('The ui.R and server.R files can be found at the following github site: https://github.com/BDFace/DDP_Project_Shiny')
-                           )
+                                h4('The app is intended to show the prevalence of Cardiovascular Risk Factor in Citizen Peruvians- Studies TORNASOL'),
+                                 p('The decision makers in Public Health needs a tools to know the magnitud of burden disease. 
+                                boxes execute a calculation for dinamic plot presented'),
+                                 p(
+                                    'Fuente: Factores de Riesgo de las Enfermedades Cardiovasculares en el 
+                                    Perú II. Estudio TORNASOL II comparado con TORNASOL I 
+                                    después de cinco años.Luis Segura Vega, Regulo Agusti, Enrique Ruiz, Wilmer Fuentes Neira et al
+                                    Revista Peruana de Cardiología 2011; 39 (1): 5-59 .
+                                  '),
+                                img(src='logo1.jpg', align = "center"),
+                                br(),
+                                p(),
+                                img(src='logo2.png', align = "center")
+                                )
                                    
             # h2("Prevalence of Cardiovascular Risk Factor"),
-            #h5("Draft of work - i have a problem to pass ALL argument(diseases,region) to my function plot pv2, pv2 work fine out of shiny  "),
-            #plotOutput("plot"),
-            #h5("Coming soon, here barplot of prevalence by age group"))
+            
             
     )
 ))))
